@@ -1,0 +1,72 @@
+imput{
+  display: inline;
+  width:50%;
+}
+#main{
+	margin-left:0%;
+	margin-right:0%;
+	width:100%;
+	
+}
+#main2{
+	padding-top:2%;
+	
+}
+#btn{
+	padding-top:.5%;
+}
+
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+ul {
+	list-style-type:none;
+}
+
+h1{
+	
+	font-family: Times;
+}
+body{
+	background-color:white;
+}
+#foot{
+	
+	padding-top:17%;
+}
+.hidden{
+	
+	visibility:hidden;
+}
+
+
+
+@media only screen and (max-width: 500px) {
+    #foot{
+	
+		padding-top:30%;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
