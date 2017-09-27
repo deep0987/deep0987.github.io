@@ -1,219 +1,150 @@
-
 <html>
 <head>
-	<title>Wiki Search</title>
-	
+	<title>Pomodoro</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="main.css">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<link rel= "stylesheet" type="text/css" href="main.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="jquery-3.2.1.min.js"></script>
 
+	<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
+	
 </head>
-
-
 <body>
-
-	<div class="container">
-		<center><h4 class="hidden">Wikipidia Search Engine</h4></center>
-		<div id="main2" class="bull">
-			<center><a href="https://en.wikipedia.org/wiki/Special:Random"><img src="https://upload.wikimedia.org/wikipedia/commons/d/de/Wikipedia_Logo_1.0.png" alt="#" class="imgr" style="width:220px; height:220px;"></img></a></center>
-			<center><h1 class="sec">Wiki Search</h1></center>
-			<div id="main">
-				<div class="row">
-					<div class="col-sm-6 col-sm-offset-3">
-						<div id="imaginary_container"> 
-							<div class="input-group stylish-input-group">
-								<input type="text" class="form-control"  placeholder="Search" id="searchString">
-								<span class="input-group-addon">
-									<button type="submit" id="search">
-										<span class="glyphicon glyphicon-search"></span>
-									</button>  
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div id="hr"></div>
-			<ul id="content">
-				
-			</ul>
+<div class="container-fluid" id="main">
+	<audio id="buzz" src="http://soundbible.com/mp3/old-fashioned-door-bell-daniel_simon.mp3" type="audio/mpeg"></audio>
+	<audio id="buzz2" src="http://soundbible.com/mp3/Tick-DeepFrozenApps-397275646.mp3" type="audio/mpeg"></audio>
+	<h1 id="header">Pomodoro Timer</h1>
+	<hr id="line">
+	<div id="niceBack" class="style1 style2" align="center">
+		<div id="time">
+			<h4 id="text1">Start Time</h4>
+			<a href="#" class="btn btn-primary" id="add5time" style="width:35px;">+</a>
+			<h2 id="startNum">5</h3>
+			<a href="#" class="btn btn-primary" id="remove5time" style="width:35px;">-</a>
 		</div>
-
+		
+		<div id="break">
+			<h4 id="text2">Break Time</h4>
+			<a href="#" class="btn btn-primary" id="add5break" style="width:35px;">+</a>
+			<h2 id="breakNum">5</h3>
+			<a href="#" class="btn btn-primary" id="remove5break" style="width:35px;">-</a>
+		</div>
+		<div id="startRun">
+			<a href="#" class="btn btn-primary" id="start">start</a>
+			<a href="#" class="btn btn-primary" id="reset">reset</a>
+		</div>
 	</div>
-	<footer>
-		<div id="foot" align="center">
-			coded and designed by <a href="https://www.facebook.com/profile.php?id=100009758328154&ref=bookmarks">DSM</a>
-		</div>
-	</footer>
-
-
+	<div id="footer">
+		<h5>Coded and Designed by || <a href="https://www.facebook.com/profile.php?id=100009758328154&ref=bookmarks" id="link1" target="_blank">Dwip S.Mondal</a></h5>
+	</div>	
+	
+</div>
 </body>
 
 <script>
-	$(document).ready(function(){
-	
-		
-		
-		$("#search").on("click",function(){
-			$("h4").removeClass("hidden");
-			$(".imgr").css({
-			
-				"visibility":"hidden"
-			
-			});
-			$("#main").css({
-			
-				"margin-top":"-20%"
-				
-			
-			});
-			$(".sec").empty();
-			if($(window).width() < 500)
-			{
-				$("#main").css({
-			
-					"margin-top":"-70%"
-				
-			
-				});
-				
-			  
-			} else {
-			  $("#main").css({
-			
-					"margin-top":"-20%"
-				
-			
-				});
-			}
-			
-		
-			function mainEvent(){	
-				var searchString = $("#searchString").val();	
-				var link="https://en.wikipedia.org/w/api.php?action=opensearch&search="+searchString+"&format=json&callback=?";
-			
-				$.ajax({
-					type:"GET",
-					url:link,
-					async:false,
-					dataType:"json",
-					success:function(data){
-					
-						$("#content").html('');
-						
-						for(var i=0; i<10; i++){
-						
-							var text = "<li><a href="+data[3][i]+"><h4>"+data[1][i]+"</h4></a><p>"+data[2][i]+"</p></li><hr>";
-							$("#content").append(text);
-						
-						}
-					
-					},
-					error:function(){
-					
-						alart("Error");
-					
-					}
-					
-					
-				
-				});	
+$(document).ready(function(){
+	var startingTime = parseInt($("#startNum").html());
+	console.log(startingTime);
+	var breakingTime = parseInt($("#breakNum").html());
+	console.log(breakingTime);
+	var counter;
+	var breakCounter;
+	var rec;
+	$("#reset").hide();
 
-			}
-			mainEvent();
-		
-		});
-		$("#searchString").on("keypress",function(e){
-			if(e.which === 13){
-			
-				$("h4").removeClass("hidden");
-				
-				$(".imgr").css({
-			
-					"visibility":"hidden"
-			
-				});
-				$("#main").css({
-			
-					"margin-top":"-20%"
-				
-			
-				});
-				
-				
-				$(".sec").empty();
-				if($(window).width() < 500)
-				{
-					$("#main").css({
-			
-						"margin-top":"-70%"
-				
-			
-					});
-					
-				
-				} else {
-					$("#main").css({
-			
-						"margin-top":"-20%"
-				
-			
-					});
+	$("#start").click(function callTimer(){
+
+			$("#niceBack").addClass("style3");
+		    counter = setInterval(timer,1000);
+		    startingTime*=60;
+
+			function timer(){
+				startingTime-=1;
+				$("#add5time,#remove5time,#add5break,#remove5break,#breakNum,#text2,#start").hide();
+				$("#text1").html("Session Time: ");
+				$("#buzz2")[0].play();
+
+				if(startingTime%60>=10){
+					$("#startNum").html(Math.floor(startingTime/60)+":"+startingTime%60);
+				}else{
+					$("#startNum").html(Math.floor(startingTime/60)+":"+"0"+startingTime%60);
 				}
-			
-				function mainEvent(){	
-				var searchString = $("#searchString").val();	
-				var link="https://en.wikipedia.org/w/api.php?action=opensearch&search="+searchString+"&format=json&callback=?";
-			
-				$.ajax({
-					type:"GET",
-					url:link,
-					async:false,
-					dataType:"json",
-					success:function(data){
-			
-						$("#content").html('');
-						for(var i=0; i<10; i++){
-						
-							var text = "<li><a href="+data[3][i]+"><h4>"+data[1][i]+"</h4></a><p>"+data[2][i]+"</p></li><hr>";
-							$("#content").append(text);
-						
-						}
-					
-					},
-					error:function(){
-					
-						alart("Error");
-					
-					}
-					
-					
-				
-				});	
 
-			 }
-			mainEvent();
-			
+				if(startingTime === 0){
+					$("#buzz")[0].play();
+					$("#buzz2")[0].pause();
+					clearInterval(counter);
+					breakCounter = setInterval(newTimer,1000);
+					breakingTime*=60;
+					function newTimer(){
+						breakingTime-=1;
+						
+						if(breakingTime%60>=10){
+							$("#breakNum").html(Math.floor(breakingTime/60)+":"+breakingTime%60);
+						}else{
+							$("#breakNum").html(Math.floor(breakingTime/60)+":"+"0"+breakingTime%60);
+						}
+						$("#buzz2")[0].play();
+
+						$("#text1").html("Break Time: ");
+						$("#breakNum").show();
+						$("#startNum").hide();
+						if(breakingTime === 0){
+							$("#buzz")[0].play();
+							$("#buzz2")[0].pause();
+							clearInterval(breakCounter);
+							$("#reset").show();
+							
+						}
+
+					}
+				}
 			}
-		
-		});
-		
-		
-		
-		
-	
+
 	});
 
 
+	$("#reset").click(function(){
+		startingTime = 5;
+		breakingTime = 5;
+		$("#startNum").html(startingTime);
+		$("#breakNum").html(breakingTime);
+		$("#add5time,#remove5time,#add5break,#remove5break,#breakNum,#text2,#start,#startNum,text1").show();
+		$("#reset").hide();
+		$("#niceBack").removeClass("style3");
+	});
+	
+	
+	$("#add5time").click(function(){
+		startingTime+=1;
+		$("#startNum").html(startingTime);
+		
+	});
+	$("#remove5time").click(function(){
+		if(startingTime > 1){
+			startingTime-=1;
+			$("#startNum").html(startingTime);
+		}
+	});
+	$("#add5break").click(function(){
+		breakingTime+=1;
+		$("#breakNum").html(breakingTime);
+		
+	});
+	$("#remove5break").click(function(){
+		if(breakingTime > 1){
+			breakingTime-=1;
+			$("#breakNum").html(breakingTime);
+		}
+	});
 
+});
 </script>
-
-
-
-
 </html>
